@@ -28,7 +28,7 @@ public int compareTo(Person other) {
 * ==0 : Means this is equal
 * < 0 : Means other is greater
 
-Above implementation has a problem. What is one of the ages is close to the max/min value supported by int.
+Above implementation has a problem. What if one of the ages is close to the max/min value supported by int.
 In that case, above implementation can lead to **Overflow Errors**
 
 **Implementation-2**
@@ -63,3 +63,28 @@ To use above way to sort
 PersonComparator personComparator = new PersonComparator();
 Collections.sort(list,personComparator);
 ```
+
+## Iterator Pattern
+Allows a way to iterate over something without knowing the 
+underlying implementation of that thing.
+Note that the class over which we want to use the Iterator pattern, must implement the
+```Iterable``` interface.
+
+### Fail-fast Iterator
+Iterators which are not tolerant to underlying changes. The default iterator for Collections is one such iterator.
+For example, what if you change the collection while you are iterating.
+Uses an internal modification counter. After every iteration, it checks
+whether this modCounter has changed its value. If so, then it fails throwing
+a ```ConcurrentModificationException```.
+
+NOTE:
+
+The javadoc states that fail-fast iterators throw <i>ConcurrentModificationException</i> on a **best-effort** basis.
+This means that it will try its best to throw an exception in case of any modifications, but it is not guaranteed that
+every modification will result in an exception being thrown. Hence, you can't just rely on this exception to verify if
+modification has occurred.
+
+Q. What if you want the iterator to work with modifications?
+
+A. Easy, just make the iterator do the modifications instead. Since, it knows where it is in the collection.
+eg:- ```iterator.remove()```
